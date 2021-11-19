@@ -1,0 +1,60 @@
+﻿@using EntityLayer.Concrete
+@model List<TakimBilgi>
+
+
+
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+}
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<br />
+<h1 class="text-center label-success">Takımlar</h1>
+<table class="table table-bordered">
+    <tr>
+        <th>Takım id</th>
+        <th>Takım İsmi</th>
+        <th>Takım Biigisi</th>
+        <th>Takım Adresi</th>
+        <th>Takım Tel</th>
+        <th>Takım Logosu</th>
+        <th>Takım Başkanı</th>
+        
+        
+        
+
+
+
+    </tr>
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>@item.Takimid</td>
+
+        <td>@item.Takimİsmi</td>
+        <td>@item.TakimBilgisi</td>
+        <td>@item.TakimAdresi</td>
+        <td>@item.TakimTel</td>
+        <td>@item.TakimLogo</td>
+        <td>@item.TakimBaskan</td>
+       
+        
+
+
+
+
+
+
+    </tr>
+    }
+
+</table>
+
+<br />
+<a href="/TakimBilgi/AddTakimBilgi" class="btn btn-info">Takım Ekle</a>
+<br />
+

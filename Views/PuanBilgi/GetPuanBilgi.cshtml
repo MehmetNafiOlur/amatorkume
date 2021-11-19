@@ -1,0 +1,56 @@
+﻿@using EntityLayer.Concrete
+@model  List<PuanBilgi>
+
+@{
+    string takimİsmi = "";
+    List<TakimBilgi> liste = ViewBag.TakimList;
+    ViewBag.Title = "GetPuanBilgi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Puan Bilgi Sayfası</h2>
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<table class="table table-hover">
+    <tr>
+        <th>Oyanan Maç</th>
+        <th>Beraberlik</th>
+        <th>Maluğbiyet</th>
+        <th>Galibiyet</th>
+        <th>Yenilen Gol</th>
+        <th>Atılan gol</th>
+        <th>Puan</th>
+        <th>Averaj</th>
+        <th>Takım Adı</th>
+        
+
+    </tr>
+    
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.OynananOyun</td>
+            <td>@item.Beraberlik</td>
+            <td>@item.Malubiyet</td>
+            <td>@item.Galibiyet</td>
+            <td>@item.YenilenGol</td>
+            <td>@item.AtilanGol</td>
+            <td>@item.Puan</td>
+            <td>@item.Averaj</td>
+            
+            <td>
+                @if (liste.Where(x => x.Takimid == item.Takimid).FirstOrDefault() != null)
+                {
+                    takimİsmi = liste.Where(x => x.Takimid == item.Takimid).FirstOrDefault().Takimİsmi;
+                }else
+                {
+                    takimİsmi = "";
+                }@takimİsmi
+
+            </td>
+
+        </tr>
+    }
+</table>
+<a href="/PuanBilgi/AddPuanBilgi" class="btn btn-info">Ekle</a>

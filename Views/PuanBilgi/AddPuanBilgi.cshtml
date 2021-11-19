@@ -1,0 +1,59 @@
+﻿@using EntityLayer.Concrete
+@model List<TakimBilgi>
+
+@{
+    ViewBag.Title = "AddPuanBilgi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
+<h1 class="text-center alert-info">Puan Ekleme Sayfası</h1>
+
+<div>
+    <form class="form-group" method="post">
+        <input type="text" placeholder="Oynanan Maç" name="OynananOyun" class="form-control" />
+        <br />
+        <input type="text" placeholder="Galibiyet" name="Galibiyet" class="form-control" />
+        <br />
+        <input type="text" placeholder="Beraberlik" name="Beraberlik" class="form-control" />
+        <br />
+        <input type="text" placeholder="Malubiyet" name="Malubiyet" class="form-control" />
+        <br />
+        <input type="text" placeholder="Averaj" name="Averaj" class="form-control" />
+        <br />
+        <input type="text" placeholder="Atılan Gol Sayısı" name="AtilanGol" class="form-control" />
+        <br />
+        <input type="text" placeholder="Yenilen Gol Sayısı" name="YenilenGol" class="form-control" />
+        <br />
+        <input type="text" placeholder="Puan" name="Puan" class="form-control" />
+        <br />
+
+
+
+        <select name="Takimid" id="Takimid">
+            <option selected="selected" value="0">Takim Seçiniz</option>
+            @foreach (var item in Model)
+            {
+
+                <option value="@item.Takimid">@item.Takimİsmi</option>
+            }
+        </select>
+        <br />
+
+        <button type="submit" class="btn btn-primary">Ekle</button>
+    </form>
+</div>
+
+
+
+
+
+<script>
+    $('#Takimİsmi').on('change', function () {
+        alert(this.value);
+    });
+</script>

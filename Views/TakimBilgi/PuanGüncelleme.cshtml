@@ -1,0 +1,43 @@
+﻿@using EntityLayer.Concrete
+@model  List<TakimBilgi>
+@{
+    List<PuanBilgi> liste = ViewBag.PuanList;
+    ViewBag.Title = "PuanGüncelleme";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Puan Guncelle</h2>
+
+<h1 class="text-center label-success">Puan Güncelle</h1>
+<table class="table table-bordered">
+    <tr>
+        <th>Takım Adı</th>
+        <th>Takım puan id </th>
+        <th>Takım Grup id</th>
+        <th>Takım puan2</th>
+        <th>Takım puan3</th>
+        <th>Takım puan4</th>
+        <th>Takım puan5</th>
+        <th>Takım puan6</th>
+        <th>Takım puan7</th>
+        <th>Güncelle</th>
+
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>@item.Takimİsmi</td>
+        <td>@item.Puanid</td>
+        <td>@item.Grupid</td>
+
+      
+
+        <td><button class="btn btn-info">Güncelle</button></td>
+
+    </tr>
+
+
+    }
+</table>
+

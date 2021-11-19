@@ -1,0 +1,84 @@
+﻿@using EntityLayer.Concrete
+@model  List<TakimBilgi>
+
+@{
+    string grupAdi = "";
+    List<GrupBilgi> liste = ViewBag.GrupList;
+    ViewBag.Title = "GrupAta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center label-success">Grup Atama Sayfası</h2>
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<table class="table table-bordered">
+    <tr>
+        <th>Takım İsmi</th>
+        
+        <th>Takımın Grubu</th>
+        <th>Grup Seç</th>
+
+    </tr>
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>@item.Takimİsmi</td>
+       
+        <td>@if (liste.Where(x => x.Grupid == item.Grupid).FirstOrDefault() != null)
+        {
+            grupAdi= liste.Where(x => x.Grupid == item.Grupid).FirstOrDefault().GrupAdi;
+        } else
+        {
+            grupAdi = "";
+        } @grupAdi
+        </td>
+
+
+        <td>
+            <select name="Grupid_@item.Takimid" id="Grupid_@item.Takimid">
+                <option selected="selected" value="@item.Grupid">Grup Seçiniz</option>
+                @foreach (var grup in ViewBag.GrupList)
+                {
+                    <option value="@grup.Grupid">@grup.GrupAdi</option>
+                }
+
+            </select>
+        </td>
+
+        <td>
+            <button onclick="Ekle(@item.Takimid)" type="submit" class="btn btn-info">Ekle</button>
+        </td>
+
+
+
+    </tr>
+
+    }
+</table>  
+
+
+
+
+
+
+<script>
+    function Ekle(Id) {
+        debugger;
+        var grupId = $("#Grupid_" + Id).val();
+        $.ajax({
+            url: '/TakimBilgi/GrupAtaKaydet',
+            data: { Id: Id, GrupId: grupId },
+            dataType: "JSON",
+            success: function (result) {
+                if (result == "Başarılı") {
+                    alert("Kayıt Başarılı");
+                    location.reload();
+                }
+                else {
+                    alert("Hata");
+                }
+            }
+        });
+    }
+
+</script>

@@ -1,0 +1,94 @@
+﻿@using EntityLayer.Concrete
+@model List<PuanBilgi>
+
+
+@{
+    string takimİsmi = "";
+    List<TakimBilgi> liste = ViewBag.TakimList;
+    ViewBag.Title = "PuanGuncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+
+<h2>Puan Guncelle</h2>
+
+<h1 class="text-center label-success">Puan Güncelle</h1>
+<table class="table table-bordered">
+    <tr>
+        <th>Takım Adı</th>
+        <th>Oynana Oyun</th>
+        <th>Galibiyet</th>
+        <th>Beraberlik</th>
+        <th>Mağlubiyet</th>
+        <th>Atılan Gol</th>
+        <th>Yenieln Gol</th>
+        <th>Averaj</th>
+        <th>Puan</th>
+        <th>Güncelle</th>
+
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+
+
+            <td>
+                @if (liste.Where(x => x.Takimid == item.Takimid).FirstOrDefault() != null)
+                {
+                    takimİsmi = liste.Where(x => x.Takimid == item.Takimid).FirstOrDefault().Takimİsmi;
+                }
+                else
+                {
+                    takimİsmi = "";
+                } @takimİsmi
+            </td>
+
+            <td><input type="text" id="oynananoyun_@item.Puanid" name="oynananOyun_@item.Puanid" style="width:50px" onfocus="this.value='@item.OynananOyun'" value="@item.OynananOyun" /> </td>
+            <td><input type="text" id="galibiyet_@item.Puanid" name="galibiyet_@item.Puanid" style="width:50px" onfocus="this.value='@item.Galibiyet'" value="@item.Galibiyet" /> </td>
+            <td><input type="text" id="beraberlik_@item.Puanid" name="beraberlik_@item.Puanid" style="width:50px" onfocus="this.value='@item.Beraberlik'" value="@item.Beraberlik" /> </td>
+            <td><input type="text" id="malubiyet_@item.Puanid" name="malubiyet_@item.Puanid" style="width:50px" onfocus="this.value='@item.Malubiyet'" value="@item.Malubiyet" /> </td>
+            <td><input type="text" id="atilanGol_@item.Puanid" name="atilanGol_@item.Puanid" style="width:50px" onfocus="this.value='@item.AtilanGol'" value="@item.AtilanGol" /> </td>
+            <td><input type="text" id="yenilenGol_@item.Puanid" name="yenilenGol_@item.Puanid" style="width:50px" onfocus="this.value='@item.YenilenGol'" value="@item.YenilenGol" /> </td>
+            <td><input type="text" id="averaj_@item.Puanid" name="averaj_@item.Puanid" style="width:50px" onfocus="this.value='@item.Averaj'" value="@item.Averaj" /> </td>
+            <td><input type="text" id="puan_@item.Puanid" name="puan_@item.Puanid" style="width:50px" onfocus="this.value='@item.Puan'" value="@item.Puan" /> </td>
+
+            <td><button onclick="up(@item.Puanid)"class="btn btn-info">Güncelle</button></td>
+
+        </tr>
+
+    }
+</table>
+
+
+
+<script>
+    function up(puanId) {
+        debugger;
+        var oynananOyun = $("#oynananoyun_" + puanId).val();
+        var galibiyet = $("#galibiyet_" + puanId).val();
+        var beraberlik = $("#beraberlik_" + puanId).val();
+        var malubiyet = $("#malubiyet_" + puanId).val();
+        var atilanGol = $("#atilanGol_" + puanId).val();
+        var yenilenGol = $("#yenilenGol_" + puanId).val();
+        var averaj = $("#averaj_" + puanId).val();
+        var puan = $("#puan_" + puanId).val();
+        $.ajax({
+            url: '/PuanBilgi/PuanGuncellemekaydet',
+            data: { puanId: puanId, puan: puan, oynananOyun: oynananOyun, beraberlik: beraberlik, galibiyet: galibiyet, malubiyet: malubiyet, atilanGol: atilanGol, yenilenGol: yenilenGol, averaj: averaj},
+            dataType: "JSON",
+            success: function (result) {e
+                if (result == "Başarılı") {
+                    alert("Kayıt Başarılı");
+                    location.reload();
+                }
+                else {
+                    alert("Hata");
+                }
+            }
+        });
+    }
+
+</script>
+
+

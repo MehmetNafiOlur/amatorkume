@@ -1,0 +1,84 @@
+﻿@using EntityLayer.Concrete
+
+@model List<TakimBilgi>
+
+@{
+    List<PuanBilgi> liste = ViewBag.PuanList;
+    ViewBag.Title = "PuanAta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center label-success">Puan Atama Sayfası</h2>
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+<table class="table table-bordered">
+    <tr>
+        <th>Takım İsmi</th>
+        <th>Durum</th>
+
+
+        <th>Puan Ata</th>
+
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>@item.Takimİsmi</td>
+        <td>@item.Puanid</td>
+
+
+
+
+        <td>
+            <select name="Puanid_@item.Takimid" id="Puanid_@item.Takimid">
+                <option selected="selected" value="@item.Puanid">Puan Seçiniz</option>
+                @foreach (var puan in ViewBag.PuanList)
+                {
+                    <option value="@puan.Puanid">@puan.Puanid</option>
+                }
+
+            </select>
+
+
+        </td>
+        <td> <button onclick="Ekle(@item.Takimid)" type="submit" class="btn btn-info">Ekle</button></td>
+
+
+    </tr>
+            }
+  
+
+
+
+
+    </table>
+
+<p class="text-danger">Puan Ekledikten Sonra Lütfen Grup Ataması Yapınız.</p>
+
+<a href="/TakimBilgi/GrupAta" class="btn btn-info">Grup Ata</a>
+
+<script>
+    function Ekle(Id) {
+        debugger;
+        var puanId = $("#Puanid_" + Id).val();
+
+        $.ajax({
+            url: '/TakimBilgi/PuanAtaKaydet',
+            data: { Id: Id, PuanId: puanId },
+            dataType: "JSON",
+            success: function (result) {
+                if (result == "Başarılı") {
+                    alert("Kayıt Başarılı");
+                    location.reload();
+                }
+                else {
+                    alert("Hata");
+                }
+            }
+        });
+    }
+
+</script>

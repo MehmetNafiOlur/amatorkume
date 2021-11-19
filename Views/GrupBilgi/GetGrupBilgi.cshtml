@@ -1,0 +1,90 @@
+﻿@using EntityLayer.Concrete
+@model List<GrupBilgi>
+
+@{
+    
+    ViewBag.Title = "GetGrupBilgi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+<br />
+<h1 class="text-center label-success">Puan Durumu</h1>
+<select name="Grupid" id="Grupid">
+    <option selected="selected" value="0">Grup Seçiniz</option>
+    @foreach (var item in Model)
+    {
+
+        <option value="@item.Grupid">@item.GrupAdi</option>
+
+
+    }
+</select>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Sıra</th>
+            <th scope="col">Takım Adı</th>
+            <th scope="col">O</th>
+            <th scope="col">G</th>
+            <th scope="col">M</th>
+            <th scope="col">B</th>
+            <th scope="col">A</th>
+            <th scope="col">AG</th>
+            <th scope="col">YG</th>
+            <th scope="col">P</th>
+
+        </tr>
+    </thead>
+    <tbody id="mytablebody">
+        <tr>
+            <th scope="row">1</th>       
+        </tr>
+
+</table>
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<script>
+    $('#Grupid').on('change', function () {
+        debugger
+        $.ajax({
+
+            url: '@Url.Action("Grupcek", "TakimBilgi")' + '?grupid='+this.value,
+            type: 'GET',
+            //data: {
+            //    'grupid': this.value
+            //},
+            dataType: 'json',
+            success: function (data) {
+
+                $("#mytablebody").html('');
+
+                $.each(data.data, function (i, item) {
+                    console.log(item);
+
+                    //console.log(item[0].Takimİsmi);
+                    $("#mytablebody").append("<tr> <th scope='row'>" + (i + 1) + "</th><td>" + item.Takimİsmi + "</td><td>" + item.PuanBilgis[0].OynananOyun + "</td><td>" + item.PuanBilgis[0].Galibiyet + "</td><td>" + item.PuanBilgis[0].Malubiyet + "</td><td>" + item.PuanBilgis[0].Beraberlik + "</td><td>" + item.PuanBilgis[0].Averaj + "</td><td>" + item.PuanBilgis[0].AtilanGol + "</td><td>" + item.PuanBilgis[0].YenilenGol + "</td><td>" + item.PuanBilgis[0].Puan + "</td></tr>");
+
+
+                });
+
+                 
+                //alert('Data: ' + data);
+            },
+            error: function (request, error) {
+                alert("Request: " + JSON.stringify(request));
+            }
+        });
+    });
+
+
+
+
+
+</script>

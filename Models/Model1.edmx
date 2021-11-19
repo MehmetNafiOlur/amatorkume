@@ -1,0 +1,329 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AmatorkumeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GrupBilgis">
+          <Key>
+            <PropertyRef Name="Grupid" />
+          </Key>
+          <Property Name="Grupid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GrupAdi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Takimid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PuanBilgis">
+          <Key>
+            <PropertyRef Name="Puanid" />
+          </Key>
+          <Property Name="Puanid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Puan" Type="nvarchar" MaxLength="50" />
+          <Property Name="Galibiyet" Type="nvarchar" MaxLength="50" />
+          <Property Name="Beraberlik" Type="nvarchar" MaxLength="50" />
+          <Property Name="Malubiyet" Type="nvarchar" MaxLength="50" />
+          <Property Name="Averaj" Type="nvarchar" MaxLength="50" />
+          <Property Name="AtilanGol" Type="nvarchar" MaxLength="50" />
+          <Property Name="YenilenGol" Type="nvarchar" MaxLength="50" />
+          <Property Name="Takimid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TakimBilgiGrupBilgis">
+          <Key>
+            <PropertyRef Name="TakimBilgi_Takimid" />
+            <PropertyRef Name="GrupBilgi_Grupid" />
+          </Key>
+          <Property Name="TakimBilgi_Takimid" Type="int" Nullable="false" />
+          <Property Name="GrupBilgi_Grupid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TakimBilgis">
+          <Key>
+            <PropertyRef Name="Takimid" />
+          </Key>
+          <Property Name="Takimid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Takimİsmi" Type="nvarchar" MaxLength="50" />
+          <Property Name="TakimBilgisi" Type="nvarchar" MaxLength="50" />
+          <Property Name="TakimAdresi" Type="nvarchar" MaxLength="50" />
+          <Property Name="TakimTel" Type="nvarchar" MaxLength="50" />
+          <Property Name="TakimLogo" Type="nvarchar" MaxLength="50" />
+          <Property Name="TakimBaskan" Type="nvarchar" MaxLength="50" />
+          <Property Name="Grupid" Type="int" Nullable="false" />
+          <Property Name="GrupAdi" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_dbo_PuanBilgis_dbo_TakimBilgis_Takimid">
+          <End Role="TakimBilgis" Type="Self.TakimBilgis" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PuanBilgis" Type="Self.PuanBilgis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TakimBilgis">
+              <PropertyRef Name="Takimid" />
+            </Principal>
+            <Dependent Role="PuanBilgis">
+              <PropertyRef Name="Takimid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TakimBilgiGrupBilgis_dbo_GrupBilgis_GrupBilgi_Grupid">
+          <End Role="GrupBilgis" Type="Self.GrupBilgis" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TakimBilgiGrupBilgis" Type="Self.TakimBilgiGrupBilgis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GrupBilgis">
+              <PropertyRef Name="Grupid" />
+            </Principal>
+            <Dependent Role="TakimBilgiGrupBilgis">
+              <PropertyRef Name="GrupBilgi_Grupid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TakimBilgiGrupBilgis_dbo_TakimBilgis_TakimBilgi_Takimid">
+          <End Role="TakimBilgis" Type="Self.TakimBilgis" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TakimBilgiGrupBilgis" Type="Self.TakimBilgiGrupBilgis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TakimBilgis">
+              <PropertyRef Name="Takimid" />
+            </Principal>
+            <Dependent Role="TakimBilgiGrupBilgis">
+              <PropertyRef Name="TakimBilgi_Takimid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AmatorkumeModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GrupBilgis" EntityType="Self.GrupBilgis" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PuanBilgis" EntityType="Self.PuanBilgis" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TakimBilgiGrupBilgis" EntityType="Self.TakimBilgiGrupBilgis" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TakimBilgis" EntityType="Self.TakimBilgis" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_PuanBilgis_dbo_TakimBilgis_Takimid" Association="Self.FK_dbo_PuanBilgis_dbo_TakimBilgis_Takimid">
+            <End Role="TakimBilgis" EntitySet="TakimBilgis" />
+            <End Role="PuanBilgis" EntitySet="PuanBilgis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TakimBilgiGrupBilgis_dbo_GrupBilgis_GrupBilgi_Grupid" Association="Self.FK_dbo_TakimBilgiGrupBilgis_dbo_GrupBilgis_GrupBilgi_Grupid">
+            <End Role="GrupBilgis" EntitySet="GrupBilgis" />
+            <End Role="TakimBilgiGrupBilgis" EntitySet="TakimBilgiGrupBilgis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TakimBilgiGrupBilgis_dbo_TakimBilgis_TakimBilgi_Takimid" Association="Self.FK_dbo_TakimBilgiGrupBilgis_dbo_TakimBilgis_TakimBilgi_Takimid">
+            <End Role="TakimBilgis" EntitySet="TakimBilgis" />
+            <End Role="TakimBilgiGrupBilgis" EntitySet="TakimBilgiGrupBilgis" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AmatorkumeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GrupBilgis">
+          <Key>
+            <PropertyRef Name="Grupid" />
+          </Key>
+          <Property Name="Grupid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GrupAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Takimid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TakimBilgis" Relationship="Self.TakimBilgiGrupBilgis" FromRole="GrupBilgis" ToRole="TakimBilgis" />
+        </EntityType>
+        <EntityType Name="PuanBilgis">
+          <Key>
+            <PropertyRef Name="Puanid" />
+          </Key>
+          <Property Name="Puanid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Puan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Galibiyet" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Beraberlik" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Malubiyet" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Averaj" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AtilanGol" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="YenilenGol" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Takimid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TakimBilgis" Relationship="Self.FK_dbo_PuanBilgis_dbo_TakimBilgis_Takimid" FromRole="PuanBilgis" ToRole="TakimBilgis" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TakimBilgis">
+          <Key>
+            <PropertyRef Name="Takimid" />
+          </Key>
+          <Property Name="Takimid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Takimİsmi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TakimBilgisi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TakimAdresi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TakimTel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TakimLogo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TakimBaskan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Grupid" Type="Int32" Nullable="false" />
+          <Property Name="GrupAdi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PuanBilgis" Relationship="Self.FK_dbo_PuanBilgis_dbo_TakimBilgis_Takimid" FromRole="TakimBilgis" ToRole="PuanBilgis" />
+          <NavigationProperty Name="GrupBilgis" Relationship="Self.TakimBilgiGrupBilgis" FromRole="TakimBilgis" ToRole="GrupBilgis" />
+        </EntityType>
+        <Association Name="FK_dbo_PuanBilgis_dbo_TakimBilgis_Takimid">
+          <End Role="TakimBilgis" Type="Self.TakimBilgis" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PuanBilgis" Type="Self.PuanBilgis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TakimBilgis">
+              <PropertyRef Name="Takimid" />
+            </Principal>
+            <Dependent Role="PuanBilgis">
+              <PropertyRef Name="Takimid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TakimBilgiGrupBilgis">
+          <End Role="GrupBilgis" Type="Self.GrupBilgis" Multiplicity="*" />
+          <End Role="TakimBilgis" Type="Self.TakimBilgis" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="AmatorkumeEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="GrupBilgis" EntityType="Self.GrupBilgis" />
+          <EntitySet Name="PuanBilgis" EntityType="Self.PuanBilgis" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="TakimBilgis" EntityType="Self.TakimBilgis" />
+          <AssociationSet Name="FK_dbo_PuanBilgis_dbo_TakimBilgis_Takimid" Association="Self.FK_dbo_PuanBilgis_dbo_TakimBilgis_Takimid">
+            <End Role="TakimBilgis" EntitySet="TakimBilgis" />
+            <End Role="PuanBilgis" EntitySet="PuanBilgis" />
+          </AssociationSet>
+          <AssociationSet Name="TakimBilgiGrupBilgis" Association="Self.TakimBilgiGrupBilgis">
+            <End Role="GrupBilgis" EntitySet="GrupBilgis" />
+            <End Role="TakimBilgis" EntitySet="TakimBilgis" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AmatorkumeModelStoreContainer" CdmEntityContainer="AmatorkumeEntities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="AmatorkumeModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GrupBilgis">
+            <EntityTypeMapping TypeName="AmatorkumeModel.GrupBilgis">
+              <MappingFragment StoreEntitySet="GrupBilgis">
+                <ScalarProperty Name="Grupid" ColumnName="Grupid" />
+                <ScalarProperty Name="GrupAdi" ColumnName="GrupAdi" />
+                <ScalarProperty Name="Takimid" ColumnName="Takimid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PuanBilgis">
+            <EntityTypeMapping TypeName="AmatorkumeModel.PuanBilgis">
+              <MappingFragment StoreEntitySet="PuanBilgis">
+                <ScalarProperty Name="Puanid" ColumnName="Puanid" />
+                <ScalarProperty Name="Puan" ColumnName="Puan" />
+                <ScalarProperty Name="Galibiyet" ColumnName="Galibiyet" />
+                <ScalarProperty Name="Beraberlik" ColumnName="Beraberlik" />
+                <ScalarProperty Name="Malubiyet" ColumnName="Malubiyet" />
+                <ScalarProperty Name="Averaj" ColumnName="Averaj" />
+                <ScalarProperty Name="AtilanGol" ColumnName="AtilanGol" />
+                <ScalarProperty Name="YenilenGol" ColumnName="YenilenGol" />
+                <ScalarProperty Name="Takimid" ColumnName="Takimid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="AmatorkumeModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TakimBilgis">
+            <EntityTypeMapping TypeName="AmatorkumeModel.TakimBilgis">
+              <MappingFragment StoreEntitySet="TakimBilgis">
+                <ScalarProperty Name="Takimid" ColumnName="Takimid" />
+                <ScalarProperty Name="Takimİsmi" ColumnName="Takimİsmi" />
+                <ScalarProperty Name="TakimBilgisi" ColumnName="TakimBilgisi" />
+                <ScalarProperty Name="TakimAdresi" ColumnName="TakimAdresi" />
+                <ScalarProperty Name="TakimTel" ColumnName="TakimTel" />
+                <ScalarProperty Name="TakimLogo" ColumnName="TakimLogo" />
+                <ScalarProperty Name="TakimBaskan" ColumnName="TakimBaskan" />
+                <ScalarProperty Name="Grupid" ColumnName="Grupid" />
+                <ScalarProperty Name="GrupAdi" ColumnName="GrupAdi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="TakimBilgiGrupBilgis" TypeName="AmatorkumeModel.TakimBilgiGrupBilgis" StoreEntitySet="TakimBilgiGrupBilgis">
+            <EndProperty Name="GrupBilgis">
+              <ScalarProperty Name="Grupid" ColumnName="GrupBilgi_Grupid" />
+            </EndProperty>
+            <EndProperty Name="TakimBilgis">
+              <ScalarProperty Name="Takimid" ColumnName="TakimBilgi_Takimid" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

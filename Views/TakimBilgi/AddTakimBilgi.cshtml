@@ -1,0 +1,49 @@
+﻿@using EntityLayer.Concrete
+
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
+<h1 class="text-center alert-info">Takım ekleme sayfası</h1>
+
+<form class="form-group" method="post">
+    <input type="text" placeholder="Takım Adı" name="Takimİsmi" class="form-control" />
+    <br />
+    <input type="text" placeholder="Takım Bilgisi" name="TakimBilgisi" class="form-control" />
+    <br />
+    <input type="text" placeholder="Takım Adresi" name="TakimAdresi" class="form-control" />
+    <br />
+    <input type="text" placeholder="Takım Telefon" name="TakimTel" class="form-control" />
+    <br />
+    <input type="text" placeholder="Takım Başkanı" name="TakimBaskan" class="form-control" />
+    <br />
+    <h4>Takım Logosu</h4>
+   
+    <input type="file" name="TakimLogo" />
+
+
+    <br />
+    <button type="submit" class="btn btn-primary">Ekle</button>
+
+</form>
+<br />
+<p class="text-danger">Takım Ekledikten Sonra Lütfen Puan Durumu Atayınız</p>
+
+<a href="/TakimBilgi/PuanAta" class="btn btn-info">Puan Durumu Ata</a>
+
+
+
+
+
+
+
+
