@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Concrete;
+using EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,17 @@ namespace AlpataAmatörKüme.Controllers
             return View();
         }
 
+        [HttpGet]
         public ActionResult FiksturEkle()
         {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult FiksturEkle(Fikstur p)
+        {
+            fm.FiksturAddBL(p);
+            return RedirectToAction("FiksturEkle");
         }
     }
 }
