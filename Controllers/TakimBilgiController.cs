@@ -54,6 +54,8 @@ namespace AlpataAmatörKüme.Controllers
         [HttpGet]
         public JsonResult Grupcek(int grupid)
         {
+            //hgfhgjfh
+
             var takimlar = cm.GetAllBL().Where(i => i.Grupid == grupid).ToList();
    
             foreach (var item in takimlar)
