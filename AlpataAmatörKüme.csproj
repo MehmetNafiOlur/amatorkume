@@ -129,6 +129,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\FiksturController.cs" />
     <Compile Include="Controllers\GrupBilgiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PuanBilgiController.cs" />
@@ -234,6 +235,7 @@
     <Content Include="Views\PuanBilgi\PuanGuncelle.cshtml" />
     <Content Include="Views\TakimBilgi\PuanAta.cshtml" />
     <Content Include="Views\TakimBilgi\PuanGüncelleme.cshtml" />
+    <Content Include="Views\Fikstur\FiksturEkle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
