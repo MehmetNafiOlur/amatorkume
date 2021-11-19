@@ -20,8 +20,10 @@ namespace AlpataAmatörKüme.Controllers
         [HttpGet]
         public ActionResult FiksturEkle()
         {
-            return View();
+            var fiksturs = fm.GetAllBL();
+            return View(fiksturs);
         }
+       
 
         [HttpPost]
         public ActionResult FiksturEkle(Fikstur p)
