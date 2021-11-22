@@ -11,6 +11,8 @@
 
 }
 
+
+
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <br />
 <h1 class="text-center label-success">Takımlar</h1>
@@ -23,9 +25,9 @@
         <th>Takım Tel</th>
         <th>Takım Logosu</th>
         <th>Takım Başkanı</th>
-        
-        
-        
+
+
+
 
 
 
@@ -39,10 +41,10 @@
         <td>@item.TakimBilgisi</td>
         <td>@item.TakimAdresi</td>
         <td>@item.TakimTel</td>
-        <td>@item.TakimLogo</td>
+        <td><img width="128" height="128" src="@item.TakimLogo" alt="logo_@item.Takimid"></td>
         <td>@item.TakimBaskan</td>
-       
-        
+
+
 
 
 
@@ -57,4 +59,5 @@
 <br />
 <a href="/TakimBilgi/AddTakimBilgi" class="btn btn-info">Takım Ekle</a>
 <br />
+
 

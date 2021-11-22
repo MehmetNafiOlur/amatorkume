@@ -15,7 +15,7 @@
 
 <h1 class="text-center alert-info">Takım ekleme sayfası</h1>
 
-<form class="form-group" method="post">
+<form class="form-group" method="post" enctype="multipart/form-data"> 
     <input type="text" placeholder="Takım Adı" name="Takimİsmi" class="form-control" />
     <br />
     <input type="text" placeholder="Takım Bilgisi" name="TakimBilgisi" class="form-control" />
@@ -28,7 +28,7 @@
     <br />
     <h4>Takım Logosu</h4>
    
-    <input type="file" name="TakimLogo" />
+    <input type="file" id="TakimLogo" name="TakimLogo" />
 
 
     <br />

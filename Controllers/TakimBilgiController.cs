@@ -36,18 +36,35 @@ namespace AlpataAmatörKüme.Controllers
 
 
         [HttpPost]
-        public ActionResult AddTakimBilgi(TakimBilgi p)
+        public ActionResult AddTakimBilgi(TakimBilgi p, HttpPostedFileBase TakimLogo)
         {
-            if (Request.Files.Count > 0)
+            if (TakimLogo != null)
             {
-                string dosyaadi = Path.GetFileName(Request.Files[0].FileName);
-                string uzanti = Path.GetExtension(Request.Files[0].FileName);
-                string yol = "~Image" + dosyaadi + uzanti;
-                Request.Files[0].SaveAs(Server.MapPath(yol));
-                p.TakimLogo = "Image" + dosyaadi + uzanti;
+                string extension = System.IO.Path.GetExtension(TakimLogo.FileName);
+                Random rnd = new Random();
+                int random = rnd.Next(10000, 99999);
+                string Path = @"Image\" + random.ToString() + "-" + TakimLogo.FileName;
+                for (; ; )
+                {
+                    if (System.IO.File.Exists(Server.MapPath("~") + Path))
+                    {
+                        random = rnd.Next(10000, 99999);
+                        Path = @"Image\" + random.ToString() + "-" + TakimLogo.FileName;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                Path = @"Image\" + random.ToString() + "-" + TakimLogo.FileName;
+
+                TakimLogo.SaveAs(Server.MapPath("~") + Path);
+
+                p.TakimLogo = "\\" + Path;
+                cm.TakimBilgiAddBL(p);
             }
-            cm.TakimBilgiAddBL(p);
-          
+   
             return RedirectToAction("GetTakimBilgi");
         }
 
