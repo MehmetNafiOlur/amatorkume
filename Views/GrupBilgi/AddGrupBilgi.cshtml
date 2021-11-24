@@ -1,16 +1,33 @@
-﻿
+﻿@model EntityLayer.Concrete.GrupBilgi
+
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 
-<h2 class="text-center label-success">Grup Ekle</h2>
-<form class="form-group" method="post">
-    <input type="text" placeholder="Grup Adı" name="GrupAdi" class="form-control" />
-    <br />
-   
-    <br />
 
-    <button class="btn btn-primary">Ekle</button>
-</form>
+@*<h2 class="text-center label-success">Grup Ekle</h2>
+    <form class="form-group" method="post">
+        <input type="text" placeholder="Grup Adı" name="GrupAdi" class="form-control" />
+        <br />
+
+        <br />
+
+        <button class="btn btn-primary">Ekle</button>
+    </form>*@
+
+@using (Html.BeginForm("AddGrupBilgi", "GrupBilgi", FormMethod.Post))
+{
+    <br /> <br />
+    <div class="form-group">
+        @Html.Label("Grup Adı")
+        @Html.TextBoxFor(x => x.GrupAdi)
+        @Html.ValidationMessageFor(x=>x.GrupAdi)
+        <br /> <br />
+
+
+        <button>Ekle</button>
+
+    </div>
+}

@@ -1,5 +1,9 @@
 ﻿using BusinessLayer.Concrete;
+using BusinessLayer.ValidationRules;
+using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
+using FluentValidation;
+using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +14,7 @@ namespace AlpataAmatörKüme.Controllers
 {
     public class GrupBilgiController : Controller
     {
-        GrupBilgiManager cm = new GrupBilgiManager();
+        GrupBilgiManager cm = new GrupBilgiManager(new EfGrupBilgiDal());
         // GET: GrupBilgi
         public ActionResult Index()
         {
@@ -19,7 +23,7 @@ namespace AlpataAmatörKüme.Controllers
 
         public ActionResult GetGrupBilgi()
         {
-            var grupbilgivalues = cm.GetAllBL();
+            var grupbilgivalues = cm.GetList();
             return View(grupbilgivalues);
         }
 
@@ -32,8 +36,22 @@ namespace AlpataAmatörKüme.Controllers
         [HttpPost]
         public ActionResult AddGrupBilgi(GrupBilgi p)
         {
-            cm.GrupBilgiAddBL(p);
-            return RedirectToAction("GetGrupBilgi");
+            // cm.GrupBilgiAddBL(p);
+            GrupBilgiValidator grupBilgiValidator = new GrupBilgiValidator();
+            ValidationResult results = grupBilgiValidator.Validate(p);
+            if (results.IsValid)
+            {
+                cm.GrupBilgiAdd(p);
+                return RedirectToAction("GetGrupBilgi");
+            }
+            else
+            {
+                foreach (var item in results.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+            }
+            return View();
         }
 
         

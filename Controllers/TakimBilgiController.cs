@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Concrete;
+using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,9 @@ namespace AlpataAmatörKüme.Controllers
 {
     public class TakimBilgiController : Controller
     {
-        PuanBilgiManager pb = new PuanBilgiManager();
-        GrupBilgiManager gb = new GrupBilgiManager();
-        TakimBilgiManager cm = new TakimBilgiManager();
+        PuanBilgiManager pb = new PuanBilgiManager(new EfPuanBilgiDal());
+        GrupBilgiManager gb = new GrupBilgiManager(new EfGrupBilgiDal());
+        TakimBilgiManager cm = new TakimBilgiManager(new EfTakimBilgiDal());
         public ActionResult Index()
         {
             return View();
@@ -21,15 +22,15 @@ namespace AlpataAmatörKüme.Controllers
 
         public ActionResult GetTakimBilgi()
         {
-            ViewBag.GrupBilgi = gb.GetAllBL();
-            var takimbilgivalues = cm.GetAllBL();
+            ViewBag.GrupBilgi = gb.GetList();
+            var takimbilgivalues = cm.GetList();
             return View(takimbilgivalues);
         }
 
         [HttpGet]
         public ActionResult AddTakimBilgi()
         {
-            var grupBilgis = gb.GetAllBL();
+            var grupBilgis = gb.GetList();
             return View(grupBilgis);
 
         }
@@ -62,7 +63,7 @@ namespace AlpataAmatörKüme.Controllers
                 TakimLogo.SaveAs(Server.MapPath("~") + Path);
 
                 p.TakimLogo = "\\" + Path;
-                cm.TakimBilgiAddBL(p);
+                cm.TakimBilgiAdd(p);
             }
    
             return RedirectToAction("GetTakimBilgi");
@@ -73,11 +74,11 @@ namespace AlpataAmatörKüme.Controllers
         {
             //hgfhgjfh
 
-            var takimlar = cm.GetAllBL().Where(i => i.Grupid == grupid).ToList();
+            var takimlar = cm.GetList().Where(i => i.Grupid == grupid).ToList();
    
             foreach (var item in takimlar)
             {
-                var puanlar = pb.GetAllBL().Where(x => x.Puanid == item.Puanid).ToList();
+                var puanlar = pb.GetList().Where(x => x.Puanid == item.Puanid).ToList();
 
                 if (puanlar != null)
                 {
@@ -92,29 +93,29 @@ namespace AlpataAmatörKüme.Controllers
         [HttpGet]
         public ActionResult GrupAta()
         {
-            ViewBag.GrupList = gb.GetAllBL();
-            var takimbilgivalues = cm.GetAllBL();
+            ViewBag.GrupList = gb.GetList();
+            var takimbilgivalues = cm.GetList();
             return View(takimbilgivalues);
         }
 
         [HttpPost]
         public ActionResult GrupAta(TakimBilgi p)
         {
-            ViewBag.GrupList = gb.GetAllBL();
-            cm.TakimBilgiAddBL(p);
+            ViewBag.GrupList = gb.GetList();
+            cm.TakimBilgiAdd(p);
             return RedirectToAction("AddTakimBilgi");
         }
 
    
         public ActionResult GrupAtaKaydet(int Id, int GrupId)
         {
-            var takim = cm.GetAllBL().Where(i => i.Takimid == Id).FirstOrDefault();
+            var takim = cm.GetList().Where(i => i.Takimid == Id).FirstOrDefault();
 
             if (takim != null)
             {
                 takim.Grupid = GrupId;
 
-                cm.TakimBilgiUpdateBL(takim);
+                cm.TakimBilgiAdd(takim);
 
                 return Json("Başarılı", JsonRequestBehavior.AllowGet);
             }
@@ -125,27 +126,27 @@ namespace AlpataAmatörKüme.Controllers
         [HttpGet]
         public ActionResult PuanAta()
         {
-            ViewBag.PuanList = pb.GetAllBL();
-            var takimbilgivalues = cm.GetAllBL();
+            ViewBag.PuanList = pb.GetList();
+            var takimbilgivalues = cm.GetList();
             return View(takimbilgivalues);
         }
 
         [HttpPost]
         public ActionResult PuanAta(TakimBilgi p)
         {
-            ViewBag.PuanList = pb.GetAllBL();
-            cm.TakimBilgiAddBL(p);
+            ViewBag.PuanList = pb.GetList();
+            cm.TakimBilgiAdd(p);
             return RedirectToAction("AddTakimBilgi");
         }
 
         public ActionResult PuanAtaKaydet(int Id, int PuanId)
         {
-            var takim = cm.GetAllBL().Where(i => i.Takimid == Id).FirstOrDefault();
+            var takim = cm.GetList().Where(i => i.Takimid == Id).FirstOrDefault();
 
             if (takim != null)
             {
                 takim.Puanid = PuanId;
-                cm.TakimBilgiUpdateBL(takim);
+                cm.TakimBilgiAdd(takim);
                 return Json("Başarılı", JsonRequestBehavior.AllowGet);
             } else
             {
@@ -157,8 +158,8 @@ namespace AlpataAmatörKüme.Controllers
         [HttpGet]
         public ActionResult PuanGüncelleme()
         {
-            ViewBag.PuanList = pb.GetAllBL();
-            var takimbilgivalues = cm.GetAllBL();
+            ViewBag.PuanList = pb.GetList();
+            var takimbilgivalues = cm.GetList();
             return View(takimbilgivalues);
         }
 

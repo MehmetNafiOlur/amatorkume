@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Concrete;
+using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,8 @@ namespace AlpataAmatörKüme.Controllers
 {
     public class PuanBilgiController : Controller
     {
-        PuanBilgiManager pb = new PuanBilgiManager();
-        TakimBilgiManager cm = new TakimBilgiManager();
+        PuanBilgiManager pb = new PuanBilgiManager(new EfPuanBilgiDal());
+        TakimBilgiManager cm = new TakimBilgiManager(new EfTakimBilgiDal());
 
         // GET: PuanBilgi
         public ActionResult Index()
@@ -22,8 +23,8 @@ namespace AlpataAmatörKüme.Controllers
     
         public ActionResult GetPuanBilgi()
         {
-            var puanBilgis = pb.GetAllBL();
-            ViewBag.TakimList = cm.GetAllBL();
+            var puanBilgis = pb.GetList();
+            ViewBag.TakimList = cm.GetList();
             return View(puanBilgis);
         }
 
@@ -31,7 +32,7 @@ namespace AlpataAmatörKüme.Controllers
         [HttpGet]
         public ActionResult AddPuanBilgi()
         {
-            var q = cm.GetAllBL();
+            var q = cm.GetList();
             return View(q);
         }
 
@@ -39,14 +40,14 @@ namespace AlpataAmatörKüme.Controllers
         [HttpPost]
         public ActionResult AddPuanBilgi(PuanBilgi p)
         {
-            pb.PuanBilgiAddBL(p);
+            pb.PuanBilgiAdd(p);
             return RedirectToAction("GetPuanBilgi");
         }
        
         public ActionResult PuanAta()
         {
-            ViewBag.TakimList = cm.GetAllBL();
-            var takimBilgis = cm.GetAllBL();  
+            ViewBag.TakimList = cm.GetList();
+            var takimBilgis = cm.GetList();  
             return View();
         }
 
@@ -54,15 +55,15 @@ namespace AlpataAmatörKüme.Controllers
         [HttpGet]
         public ActionResult PuanGuncelle()
         {
-            ViewBag.TakimList = cm.GetAllBL();
-            var puanbilgivalues = pb.GetAllBL();
+            ViewBag.TakimList = cm.GetList();
+            var puanbilgivalues = pb.GetList();
             return View(puanbilgivalues);
         }
 
 
         public ActionResult PuanGuncellemekaydet(int? puanId, string oynananOyun,string galibiyet,string beraberlik,string malubiyet,string atilanGol,string yenilenGol,string averaj,string puan)
         {
-            var up = pb.GetAllBL().Where(x => x.Puanid == puanId).FirstOrDefault();
+            var up = pb.GetList().Where(x => x.Puanid == puanId).FirstOrDefault();
 
             up.OynananOyun = oynananOyun;
             up.Galibiyet = galibiyet;
@@ -73,7 +74,7 @@ namespace AlpataAmatörKüme.Controllers
             up.Averaj = averaj;
             up.Puan = puan;
 
-            pb.PuanBilgiUpdateBL(up);
+            pb.PuanBilgiAdd(up);
 
                
             return Json("Başarılı", JsonRequestBehavior.AllowGet);
