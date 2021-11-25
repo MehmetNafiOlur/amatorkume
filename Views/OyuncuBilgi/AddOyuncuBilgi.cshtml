@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "AddOyuncuBilgi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h1 class="text-center alert-info">Oyuncu Ekleme Sayfası</h1>
+
+<div>
+    <form class="form-group" method="post">
+        <input type="text" placeholder="Oyuncunun Adı" name="OyuncuAdi" class="form-control" />
+        <br />
+        <input type="text" placeholder="Oyuncunun Numarası" name="OyuncuNumara" class="form-control" />
+        <br />
+        <input type="text" placeholder="Oynadığı Mevki" name="OyuncuMevki" class="form-control" />
+        <br />
+        <button type="submit" class="btn btn-primary">Ekle</button>
+    </form>
+</div>
