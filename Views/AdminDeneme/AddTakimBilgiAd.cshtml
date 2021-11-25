@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewBag.Title = "AddTakimBilgiAd";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<form class="form-group" method="post" enctype="multipart/form-data">
+        <input type="text" placeholder="Takım Adı" name="Takimİsmi" class="form-control" />
+        <br />
+        <input type="text" placeholder="Takım Bilgisi" name="TakimBilgisi" class="form-control" />
+        <br />
+        <input type="text" placeholder="Takım Adresi" name="TakimAdresi" class="form-control" />
+        <br />
+        <input type="text" placeholder="Takım Telefon" name="TakimTel" class="form-control" />
+        <br />
+        <input type="text" placeholder="Takım Başkanı" name="TakimBaskan" class="form-control" />
+        <br />
+        <h4>Takım Logosu</h4>
+        <br />  
+        <input type="file" id="TakimLogo" name="TakimLogo" />
+
+    3
+        <br />
+        <br />
+        <button type="submit" class="btn btn-primary">Ekle</button>
+
+    </form>
+    <br />
+    <p class="text-danger">Takım Ekledikten Sonra Lütfen Puan Durumu Atayınız</p>
+
+    <a href="/TakimBilgi/PuanAta" class="btn btn-info">Puan Durumu Ata</a>
+
+
